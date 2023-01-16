@@ -12,7 +12,7 @@ set -e
 #
 # Requires dehydrated (https://github.com/lukas2511/dehydrated)
 # Requires cli53 (https://github.com/barnybug/cli53)
-# Requires bash, jq, mailx, sed, xargs
+# Requires bash, jq, sed, xargs
 #
 # Requires AWS credentials with access to Route53, with permissions
 # to list zones, and to create and delete records in zones.
@@ -100,14 +100,6 @@ function invalid_challenge {
 
     # Output error to stderr
     (>&2 echo "Failed to issue SSL cert for ${DOMAIN}: ${RESPONSE}")
-
-    # Mail error to root user
-    mailx -s "Failed to issue SSL cert for ${DOMAIN} on ${HOSTNAME}" root <<-END
-      Failed to issue SSL cert for ${DOMAIN} on ${HOSTNAME}
-
-      Error from verification server:
-      ${RESPONSE}
-END
 }
 
 #
